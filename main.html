@@ -4,7 +4,6 @@
     <title>Modelling and Data Analytics for Pharmaceutical Sciences</title>
     <meta charset="utf-8" />
     <meta name="author" content="Stéphane Guerrier" />
-    <script src="main_files/header-attrs-2.8/header-attrs.js"></script>
     <link href="main_files/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="main_files/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
     <link href="main_files/remark-css-0.0.1/metropolis-fonts.css" rel="stylesheet" />
@@ -18,7 +17,6 @@
     <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
     <link href="main_files/xaringanExtra-extra-styles-0.2.4/xaringanExtra-extra-styles.css" rel="stylesheet" />
     <script src="main_files/kePrint-0.0.1/kePrint.js"></script>
-    <link href="main_files/lightable-0.0.1/lightable.css" rel="stylesheet" />
     <script src="main_files/htmlwidgets-1.5.3/htmlwidgets.js"></script>
     <script src="main_files/pymjs-1.3.2/pym.v1.js"></script>
     <script src="main_files/widgetframe-binding-0.3.1/widgetframe.js"></script>
@@ -197,17 +195,17 @@ The data set includes information about:
 
 ```
 #&gt; # A tibble: 6 x 21
-#&gt;   customerID gender SeniorCitizen Partner Dependents tenure PhoneService MultipleLines InternetService OnlineSecurity
-#&gt;   &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;         &lt;chr&gt;           &lt;chr&gt;         
-#&gt; 1 7590-VHVEG Female             0 Yes     No              1 No           No phone ser… DSL             No            
-#&gt; 2 5575-GNVDE Male               0 No      No             34 Yes          No            DSL             Yes           
-#&gt; 3 3668-QPYBK Male               0 No      No              2 Yes          No            DSL             Yes           
-#&gt; 4 7795-CFOCW Male               0 No      No             45 No           No phone ser… DSL             Yes           
-#&gt; 5 9237-HQITU Female             0 No      No              2 Yes          No            Fiber optic     No            
-#&gt; 6 9305-CDSKC Female             0 No      No              8 Yes          Yes           Fiber optic     No            
-#&gt; # … with 11 more variables: OnlineBackup &lt;chr&gt;, DeviceProtection &lt;chr&gt;, TechSupport &lt;chr&gt;, StreamingTV &lt;chr&gt;,
-#&gt; #   StreamingMovies &lt;chr&gt;, Contract &lt;chr&gt;, PaperlessBilling &lt;chr&gt;, PaymentMethod &lt;chr&gt;, MonthlyCharges &lt;dbl&gt;,
-#&gt; #   TotalCharges &lt;dbl&gt;, Churn &lt;chr&gt;
+#&gt;   customerID gender SeniorCitizen Partner Dependents tenure PhoneService MultipleLines InternetService
+#&gt;   &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;         &lt;chr&gt;          
+#&gt; 1 7590-VHVEG Female             0 Yes     No              1 No           No phone ser… DSL            
+#&gt; 2 5575-GNVDE Male               0 No      No             34 Yes          No            DSL            
+#&gt; 3 3668-QPYBK Male               0 No      No              2 Yes          No            DSL            
+#&gt; 4 7795-CFOCW Male               0 No      No             45 No           No phone ser… DSL            
+#&gt; 5 9237-HQITU Female             0 No      No              2 Yes          No            Fiber optic    
+#&gt; 6 9305-CDSKC Female             0 No      No              8 Yes          Yes           Fiber optic    
+#&gt; # … with 12 more variables: OnlineSecurity &lt;chr&gt;, OnlineBackup &lt;chr&gt;, DeviceProtection &lt;chr&gt;, TechSupport &lt;chr&gt;,
+#&gt; #   StreamingTV &lt;chr&gt;, StreamingMovies &lt;chr&gt;, Contract &lt;chr&gt;, PaperlessBilling &lt;chr&gt;, PaymentMethod &lt;chr&gt;,
+#&gt; #   MonthlyCharges &lt;dbl&gt;, TotalCharges &lt;dbl&gt;, Churn &lt;chr&gt;
 ```
 
 
@@ -364,8 +362,8 @@ The data set includes information about:
 
 We find many models with equivalent estimated out-of-sample prediction error.
 
-<div id="htmlwidget-8f737d41de32f852e956" style="width:100%;height:40%;" class="widgetframe html-widget"></div>
-<script type="application/json" data-for="htmlwidget-8f737d41de32f852e956">{"x":{"url":"main_files/figure-html//widgets/widget_unnamed-chunk-10.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-87148f3f8ce9a2a13e02" style="width:100%;height:40%;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-87148f3f8ce9a2a13e02">{"x":{"url":"main_files/figure-html//widgets/widget_unnamed-chunk-10.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
 
 ---
 
