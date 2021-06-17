@@ -173,6 +173,7 @@ class: title-slide
 <br>
 <br>
 <br>
+<br>
  
 # IOM PhD Day - Friday 18 June 2021
 
@@ -252,7 +253,7 @@ However, this approach has some drawbacks:
 
 # .smallest[How to address these limitations?]
 
-- A possible solution is the .pink[SWAG algorithm] proposed in Guerrier et al. (2016) and later improved in Molinari et al. (2021). This .purple2[wrapper] method aims to alleviate (some of) these issues and .purple2[is build "on top" of an arbitrary predictive method] (e.g. logistic regression, random forest, ANN). 
+- A possible solution is the .pink[SWAG algorithm] proposed in Guerrier et al. (2016) and later improved in Molinari et al. (2021). This .purple2[wrapper] method aims to alleviate (some of) these issues and .purple2[is build "on top" of an arbitrary predictive method] (e.g. logistic regression, random forest, ANN, ...). 
 - Its goals are the following:
     - Finding ALL models (and parameters) minimizing an out-of-sample objective function (e.g.  classification error).
     - Restricting our attention to the models with the smallest dimension.
@@ -295,9 +296,10 @@ include_graphics("pics/network.png")
 
 # .smallest[Context of the analysis]
 
-- Most statistical methods are used to deliver estimates and predictions for different problems with the goal of using these results for decision-making (e.g. whether a patient should be treated, selecting a drug or its dosage). 
-- The vast majority of these methods are independent of the context of this decision-making process and the approach used to obtain model's parameters (and prediction) is fixed for all applications.
-- This can lead to contradictory examples (e.g.  asymmetric "risk" of treating vs not treating a patient). Indeed, not all prediction errors are the "same" or have similar "impacts".
+- Most statistical methods are used to deliver estimates and predictions for different problems with .purple2[the goal of using these results for decision-making] (e.g. whether a patient should be treated, selecting a drug or its dosage, marketing strategy, ...). 
+- The vast majority of these methods are .hi.pink[independent] of the context of this decision-making process and the approach used to obtain model's parameters (and prediction) is .hi.pink[fixed] for all applications.
+- This can lead to .puple2[contradictory examples] (e.g.  asymmetric "risk" of treating vs not treating a patient). Indeed, not all prediction errors are the "same" or have similar "impacts".
+- The SWAG allows to .purple2[incorporate] the "context" of the decision-making (e.g. weighted risks).
 
 ---
 
@@ -331,27 +333,27 @@ include_graphics("pics/fun2.png")
 # .smallest[Example: Customer churn]
 
 - Customer churn or attrition corresponds to the loss of clients or customers.
-- Banks, telephone service companies, Internet service providers and other similar companies, often use customer attrition rates as one of their key business metrics.
-- Adequate (probabilistic) modeling of customer churn is therefore a problem of interest. A classical and standard approach to model such data is following:
+- Banks, telephone service companies, Internet service providers and other similar companies, often use customer attrition rates as one of their .purple2[key business metrics].
+- Adequate (probabilistic) modeling of customer churn is therefore a problem of interest. A .purple2[classical and standard approach to model such data] is following:
+    - Model the data using logistic regression.
+    - Select the variables using the AIC (or other similar criteria) in a stepwise (greedy) manner (a popular alternative would be based on the lasso).
+    - Make inference on the variables of interested based on the MLE on the selected model (⚠️ as if the model was known! ⚠️).
 
-We first consider a simple variable selection method based on the Akaike information criterion  (AIC). We consider a stepwise AIC-based variable selection method. This is a standard approach and proceed to greedy variable selection based on the AIC. Considering this method, we obtain the following estimated model:
 
 ---
 
 # .smallest[Customer churn: Dataset]
 
-We consider the [*Telco customer churn*](https://community.ibm.com/community/user/businessanalytics/blogs/steven-macko/2019/07/11/telco-customer-churn-1113) that provides information about customers of a telecom company and whether or not left the clientele of the company.
+We consider the [*Telco customer churn*](https://community.ibm.com/community/user/businessanalytics/blogs/steven-macko/2019/07/11/telco-customer-churn-1113) that provides information about .purple2[customers of a telecom company and whether or not they left the company].
 
 The data set includes information about:
 
-- Customers who left within the last month – the column is called Churn
+- .pink[Customers who left within the last month]
+- .pink[Services that each customer has signed up for] (e.g. phone, multiple lines, internet, online security, ...)
+- .pink[Customer account information] (e.g. how long they have been a customer, contract, payment method, ...)
+- .pink[Demographic info] (e.g. gender, age range, ...)
 
-- Services that each customer has signed up for – phone, multiple lines, internet, online security, online backup, device protection, tech support, and streaming TV and movies
-
-- Customer account information – how long they have been a customer, contract, payment method, paperless billing, monthly charges, and total charges
-
-- Demographic info about customers – gender, age range, and if they have partners and dependents
-
+This dataset is relatively large with $10^4$ observations and more than $50$ variables.
 
 ```{r, echo = F, warning =F}
 library(readr)
@@ -359,12 +361,9 @@ customer_churn <- read_csv("data/customer_churn.csv")
 # head(customer_churn)
 ```
 
-
-
-
-
 ---
-# .smallest[Customer churn: Simple analysis]
+
+# .smallest[Customer churn: standard analysis]
 
 ```{r, echo=F}
 load("data/selected_model_aic.rda")
@@ -378,12 +377,9 @@ df_1$coefficients %>%
 
 ---
 
-# SWAG
-
-We find many models with equivalent estimated out-of-sample prediction error.
+# .smallest[Customer churn: SWAG-based Analysis]
 
 ```{r, echo =F}
-
 library(MASS)
 library(boot)
 library(ggplot2)
@@ -445,6 +441,10 @@ frameWidget(l, width='100%', height='40%')
 
 We can represent the relationship between variables in the best performing models (with respect to the estimated out of sample error) with a chord diagram. Each chord represent the number of time two variables were included in a model among the best performing models.
 
+---
+
+# afklsgn
+
 <div align="center">
 
 ```{r, echo =F, fig.align='center'}
@@ -469,4 +469,10 @@ frameWidget(l2,  width ='100%')
 
 ---
 
-# END!
+# .smallest[Thank you very much for your attention!]
+
+```{R, med2, out.width = "65%", echo = F}
+include_graphics("pics/medical_studies2.png")
+```
+
+.footnote[.smallest[👋] Read the original article: "*This is why you shouldn’t believe that exciting new medical study*" [here](https://www.vox.com/2015/3/23/8264355/research-study-hype).]

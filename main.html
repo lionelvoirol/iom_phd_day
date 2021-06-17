@@ -4,19 +4,19 @@
     <title>Modelling and Data Analytics for Pharmaceutical Sciences</title>
     <meta charset="utf-8" />
     <meta name="author" content="Stéphane Guerrier" />
-    <script src="main_files/header-attrs-2.8/header-attrs.js"></script>
+    <script src="main_files/header-attrs-2.9/header-attrs.js"></script>
     <link href="main_files/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="main_files/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
     <link href="main_files/remark-css-0.0.1/metropolis-fonts.css" rel="stylesheet" />
-    <link href="main_files/tile-view-0.2.4/tile-view.css" rel="stylesheet" />
-    <script src="main_files/tile-view-0.2.4/tile-view.js"></script>
-    <link href="main_files/panelset-0.2.4/panelset.css" rel="stylesheet" />
-    <script src="main_files/panelset-0.2.4/panelset.js"></script>
+    <link href="main_files/tile-view-0.2.6/tile-view.css" rel="stylesheet" />
+    <script src="main_files/tile-view-0.2.6/tile-view.js"></script>
+    <link href="main_files/panelset-0.2.6/panelset.css" rel="stylesheet" />
+    <script src="main_files/panelset-0.2.6/panelset.js"></script>
     <script src="main_files/clipboard-2.0.6/clipboard.min.js"></script>
-    <link href="main_files/xaringanExtra-clipboard-0.2.4/xaringanExtra-clipboard.css" rel="stylesheet" />
-    <script src="main_files/xaringanExtra-clipboard-0.2.4/xaringanExtra-clipboard.js"></script>
+    <link href="main_files/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.css" rel="stylesheet" />
+    <script src="main_files/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.js"></script>
     <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
-    <link href="main_files/xaringanExtra-extra-styles-0.2.4/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <link href="main_files/xaringanExtra-extra-styles-0.2.6/xaringanExtra-extra-styles.css" rel="stylesheet" />
     <script src="main_files/kePrint-0.0.1/kePrint.js"></script>
     <link href="main_files/lightable-0.0.1/lightable.css" rel="stylesheet" />
     <script src="main_files/htmlwidgets-1.5.3/htmlwidgets.js"></script>
@@ -38,6 +38,7 @@
 
 class: title-slide  
 &lt;div class="my-logo-right"&gt;&lt;/div&gt;
+&lt;br&gt;
 &lt;br&gt;
 &lt;br&gt;
 &lt;br&gt;
@@ -99,23 +100,25 @@ How statisticians (typically) understand this definition:
 
 ---
 
-# Is this a good idea? 🤔
+# .smallest[Is this a good idea?] 🤔
 
 According to our understanding of the problem (i.e. .purple2[single model based on likelihood methods]): .hi.pink[YES!] 
 
 However, this approach has some drawbacks:
 
-- Focusing on a single model suggests a level of confidence in our final result that is not justified by the data as other models generally exist with similar goodness of fit.
-- Maximizing the likelihood function does not guarantee finding the best model(s) (and parameters) according to a given out-of-sample objective function.
-- These methods are prone to overfitting (due to the asymmetric effects of "under" vs "over" fitting).
+- Focusing on a .hi.purple2[single model suggests a level of confidence in our final result that is not justified by the data] as other models generally exist with similar goodness of fit.
+- Maximizing the likelihood function .purple2[does not guarantee finding the best model(s)] (and parameters) according to a given out-of-sample objective function.
+- These methods are prone to .purple2[overfitting] (due to the asymmetric effects of "under" vs "over" fitting).
 
 ---
 
-# How to address these limitations?
+# .smallest[How to address these limitations?]
 
-A possible solution: The "SWAG" algorithm proposed in Guerrier et al. (2016) is an heuristic approach that aims to address (some of ) these issues.  Its goals are the following: Finding ALL models (and parameters) minimizing an out-of-sample objective function (e.g.  classification error).Restricting our attention to the models with the smallest dimension.
-
-An example:We applied our methodology to well-known data-set on the classificationof Acute Myeloid Leukemia (AML) against Acute Lymphoblastic Leukemia(ALL) (seeGolub et al., 1999, Science).
+- A possible solution is the .pink[SWAG algorithm] proposed in Guerrier et al. (2016) and later improved in Molinari et al. (2021). This .purple2[wrapper] method aims to alleviate (some of) these issues and .purple2[is build "on top" of an arbitrary predictive method] (e.g. logistic regression, random forest, ANN, ...). 
+- Its goals are the following:
+    - Finding ALL models (and parameters) minimizing an out-of-sample objective function (e.g.  classification error).
+    - Restricting our attention to the models with the smallest dimension.
+- As an example, we applied in Guerrier et al. (2016) our methodology to well-known dataset on the .purple2[classification of Acute Myeloid Leukemia (AML) against Acute Lymphoblastic Leukemia (ALL)] (see Golub et al., 1999).
 
 ---
 
@@ -148,22 +151,33 @@ An example:We applied our methodology to well-known data-set on the classificati
 
 ---
 
-# Additional advantage 
+# .smallest[Context of the analysis]
 
-Most statistical methods are used to deliver estimates and predictions for different problems with the goal of using these results for decision-making (e.g.  whether a patient should be treated, selecting a drug or its dosage). The vast majority of these methods are independent of the context of this decision-making process and the approach used to obtain model’s parameters (and prediction) is fixed for all applications.This can lead to contradictory examples (e.g.  asymmetric “risk” of treating vs not treating a patient). Indeed, not all prediction errors are the “same” or have similar “impacts”.
+- Most statistical methods are used to deliver estimates and predictions for different problems with .purple2[the goal of using these results for decision-making] (e.g. whether a patient should be treated, selecting a drug or its dosage, marketing strategy, ...). 
+- The vast majority of these methods are .hi.pink[independent] of the context of this decision-making process and the approach used to obtain model's parameters (and prediction) is .hi.pink[fixed] for all applications.
+- This can lead to .puple2[contradictory examples] (e.g.  asymmetric "risk" of treating vs not treating a patient). Indeed, not all prediction errors are the "same" or have similar "impacts".
+- The SWAG allows to .purple2[incorporate] the "context" of the decision-making (e.g. weighted risks).
 
 ---
 
-# .smallest[Not all classification errors are the same]
+# .smallest[Not all classification errors are the same...] 🙄
 
 .pull-left[
 &lt;br&gt;
-&lt;img src="pics/fun1.png" width="70%" style="display: block; margin: auto;" /&gt;
+&lt;img src="pics/fun1.png" width="65%" style="display: block; margin: auto;" /&gt;
+
+&lt;center&gt;
+.hisg[Type I error] (false positive)
+&lt;/center&gt;
 
 ]
 .pull-right[
 &lt;br&gt;
-&lt;img src="pics/fun2.png" width="70%" style="display: block; margin: auto;" /&gt;
+&lt;img src="pics/fun2.png" width="65%" style="display: block; margin: auto;" /&gt;
+
+&lt;center&gt;
+.hisg[Type II error] (false negative)
+&lt;/center&gt;
 
 ]
 
@@ -172,36 +186,33 @@ Most statistical methods are used to deliver estimates and predictions for diffe
 # .smallest[Example: Customer churn]
 
 - Customer churn or attrition corresponds to the loss of clients or customers.
-- Banks, telephone service companies, Internet service providers and other similar companies, often use customer attrition rates as one of their key business metrics.
-- Adequate (probabilistic) modeling of customer churn is therefore a problem of interest. A classical and standard approach to model such data is following:
+- Banks, telephone service companies, Internet service providers and other similar companies, often use customer attrition rates as one of their .purple2[key business metrics].
+- Adequate (probabilistic) modeling of customer churn is therefore a problem of interest. A .purple2[classical and standard approach to model such data] is following:
+    - Model the data using logistic regression.
+    - Select the variables using the AIC (or other similar criteria) in a stepwise (greedy) manner (a popular alternative would be based on the lasso).
+    - Make inference on the variables of interested based on the MLE on the selected model (⚠️ as if the model was known! ⚠️).
 
-We first consider a simple variable selection method based on the Akaike information criterion  (AIC). We consider a stepwise AIC-based variable selection method. This is a standard approach and proceed to greedy variable selection based on the AIC. Considering this method, we obtain the following estimated model:
 
 ---
 
 # .smallest[Customer churn: Dataset]
 
-We consider the [*Telco customer churn*](https://community.ibm.com/community/user/businessanalytics/blogs/steven-macko/2019/07/11/telco-customer-churn-1113) that provides information about customers of a telecom company and whether or not left the clientele of the company.
+We consider the [*Telco customer churn*](https://community.ibm.com/community/user/businessanalytics/blogs/steven-macko/2019/07/11/telco-customer-churn-1113) that provides information about .purple2[customers of a telecom company and whether or not they left the company].
 
 The data set includes information about:
 
-- Customers who left within the last month – the column is called Churn
+- .pink[Customers who left within the last month]
+- .pink[Services that each customer has signed up for] (e.g. phone, multiple lines, internet, online security, ...)
+- .pink[Customer account information] (e.g. how long they have been a customer, contract, payment method, ...)
+- .pink[Demographic info] (e.g. gender, age range, ...)
 
-- Services that each customer has signed up for – phone, multiple lines, internet, online security, online backup, device protection, tech support, and streaming TV and movies
-
-- Customer account information – how long they have been a customer, contract, payment method, paperless billing, monthly charges, and total charges
-
-- Demographic info about customers – gender, age range, and if they have partners and dependents
-
-
-
-
-
+This dataset is relatively large with `\(10^4\)` observations and more than `\(50\)` variables.
 
 
 
 ---
-# .smallest[Customer churn: Simple analysis]
+
+# .smallest[Customer churn: standard analysis]
 
 &lt;table class="table" style="font-size: 12px; margin-left: auto; margin-right: auto;"&gt;
  &lt;thead&gt;
@@ -346,12 +357,10 @@ The data set includes information about:
 
 ---
 
-# SWAG
+# .smallest[Customer churn: SWAG-based Analysis]
 
-We find many models with equivalent estimated out-of-sample prediction error.
-
-<div id="htmlwidget-4940154d963bc76fb746" style="width:100%;height:40%;" class="widgetframe html-widget"></div>
-<script type="application/json" data-for="htmlwidget-4940154d963bc76fb746">{"x":{"url":"main_files/figure-html//widgets/widget_unnamed-chunk-10.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-f77d676cdb168d449d79" style="width:100%;height:40%;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f77d676cdb168d449d79">{"x":{"url":"main_files/figure-html//widgets/widget_unnamed-chunk-10.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
 
 ---
 
@@ -359,10 +368,14 @@ We find many models with equivalent estimated out-of-sample prediction error.
 
 We can represent the relationship between variables in the best performing models (with respect to the estimated out of sample error) with a chord diagram. Each chord represent the number of time two variables were included in a model among the best performing models.
 
+---
+
+# afklsgn
+
 &lt;div align="center"&gt;
 
-<div id="htmlwidget-978c08a6d1c06eb90e7e" style="width:100%;height:504px;" class="widgetframe html-widget"></div>
-<script type="application/json" data-for="htmlwidget-978c08a6d1c06eb90e7e">{"x":{"url":"main_files/figure-html//widgets/widget_unnamed-chunk-11.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-cd5137fbbe57d4a02421" style="width:100%;height:504px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-cd5137fbbe57d4a02421">{"x":{"url":"main_files/figure-html//widgets/widget_unnamed-chunk-11.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
 
 &lt;/div&gt;
 
@@ -375,7 +388,11 @@ We can represent the relationship between variables in the best performing model
 
 ---
 
-# END!
+# .smallest[Thank you very much for your attention!]
+
+&lt;img src="pics/medical_studies2.png" width="65%" style="display: block; margin: auto;" /&gt;
+
+.footnote[.smallest[👋] Read the original article: "*This is why you shouldn’t believe that exciting new medical study*" [here](https://www.vox.com/2015/3/23/8264355/research-study-hype).]
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
