@@ -41,60 +41,60 @@ df_telco$SeniorCitizen <- as.factor(ifelse(df_telco$SeniorCitizen==1, 'YES', 'NO
 # exploratory
 
 # dependant variable
-ggplot(df_telco, aes(y= Churn))+ geom_bar() 
+# ggplot(df_telco, aes(y= Churn))+ geom_bar() 
 
 
 # independant variables
-options(repr.plot.width = 12, repr.plot.height = 8)
-plot_grid(ggplot(df_telco, aes(x=gender,fill=Churn))+ geom_bar(), 
-          ggplot(df_telco, aes(x=SeniorCitizen,fill=Churn))+ geom_bar(position = 'fill'),
-          ggplot(df_telco, aes(x=Partner,fill=Churn))+ geom_bar(position = 'fill'),
-          ggplot(df_telco, aes(x=Dependents,fill=Churn))+ geom_bar(position = 'fill'),
-          ggplot(df_telco, aes(x=PhoneService,fill=Churn))+ geom_bar(position = 'fill'),
-          ggplot(df_telco, aes(x=MultipleLines,fill=Churn))+ geom_bar(position = 'fill')+theme_bw()+
-            scale_x_discrete(labels = function(x) str_wrap(x, width = 10)),
-          align = "h")
+# options(repr.plot.width = 12, repr.plot.height = 8)
+# plot_grid(ggplot(df_telco, aes(x=gender,fill=Churn))+ geom_bar(), 
+#           ggplot(df_telco, aes(x=SeniorCitizen,fill=Churn))+ geom_bar(position = 'fill'),
+#           ggplot(df_telco, aes(x=Partner,fill=Churn))+ geom_bar(position = 'fill'),
+#           ggplot(df_telco, aes(x=Dependents,fill=Churn))+ geom_bar(position = 'fill'),
+#           ggplot(df_telco, aes(x=PhoneService,fill=Churn))+ geom_bar(position = 'fill'),
+#           ggplot(df_telco, aes(x=MultipleLines,fill=Churn))+ geom_bar(position = 'fill')+theme_bw()+
+#             scale_x_discrete(labels = function(x) str_wrap(x, width = 10)),
+#           align = "h")
 
 
 
-options(repr.plot.width = 12, repr.plot.height = 8)
-plot_grid(ggplot(df_telco, aes(x=InternetService,fill=Churn))+ geom_bar(position = 'fill')+
-            scale_x_discrete(labels = function(x) str_wrap(x, width = 10)), 
-          ggplot(df_telco, aes(x=OnlineSecurity,fill=Churn))+ geom_bar(position = 'fill')+
-            scale_x_discrete(labels = function(x) str_wrap(x, width = 10)),
-          ggplot(df_telco, aes(x=OnlineBackup,fill=Churn))+ geom_bar(position = 'fill')+
-            scale_x_discrete(labels = function(x) str_wrap(x, width = 10)),
-          ggplot(df_telco, aes(x=DeviceProtection,fill=Churn))+ geom_bar(position = 'fill')+
-            scale_x_discrete(labels = function(x) str_wrap(x, width = 10)),
-          ggplot(df_telco, aes(x=TechSupport,fill=Churn))+ geom_bar(position = 'fill')+
-            scale_x_discrete(labels = function(x) str_wrap(x, width = 10)),
-          ggplot(df_telco, aes(x=StreamingTV,fill=Churn))+ geom_bar(position = 'fill')+theme_bw()+
-            scale_x_discrete(labels = function(x) str_wrap(x, width = 10)),
-          align = "h")
+# options(repr.plot.width = 12, repr.plot.height = 8)
+# plot_grid(ggplot(df_telco, aes(x=InternetService,fill=Churn))+ geom_bar(position = 'fill')+
+#             scale_x_discrete(labels = function(x) str_wrap(x, width = 10)), 
+#           ggplot(df_telco, aes(x=OnlineSecurity,fill=Churn))+ geom_bar(position = 'fill')+
+#             scale_x_discrete(labels = function(x) str_wrap(x, width = 10)),
+#           ggplot(df_telco, aes(x=OnlineBackup,fill=Churn))+ geom_bar(position = 'fill')+
+#             scale_x_discrete(labels = function(x) str_wrap(x, width = 10)),
+#           ggplot(df_telco, aes(x=DeviceProtection,fill=Churn))+ geom_bar(position = 'fill')+
+#             scale_x_discrete(labels = function(x) str_wrap(x, width = 10)),
+#           ggplot(df_telco, aes(x=TechSupport,fill=Churn))+ geom_bar(position = 'fill')+
+#             scale_x_discrete(labels = function(x) str_wrap(x, width = 10)),
+#           ggplot(df_telco, aes(x=StreamingTV,fill=Churn))+ geom_bar(position = 'fill')+theme_bw()+
+#             scale_x_discrete(labels = function(x) str_wrap(x, width = 10)),
+#           align = "h")
 
 
 
-options(repr.plot.width =6, repr.plot.height = 2)
-ggplot(df_telco, aes(y= tenure, x = "", fill = Churn)) + 
-  geom_boxplot()+ 
-  theme_bw()+
-  xlab(" ")
+# options(repr.plot.width =6, repr.plot.height = 2)
+# ggplot(df_telco, aes(y= tenure, x = "", fill = Churn)) + 
+#   geom_boxplot()+ 
+#   theme_bw()+
+#   xlab(" ")
+# 
+# ggplot(df_telco, aes(y= MonthlyCharges, x = "", fill = Churn)) + 
+#   geom_boxplot()+ 
+#   theme_bw()+
+#   xlab(" ")
 
-ggplot(df_telco, aes(y= MonthlyCharges, x = "", fill = Churn)) + 
-  geom_boxplot()+ 
-  theme_bw()+
-  xlab(" ")
 
-
-ggplot(df_telco, aes(y= TotalCharges, x = "", fill = Churn)) + 
-  geom_boxplot()+ 
-  theme_bw()+
-  xlab(" ")
+# ggplot(df_telco, aes(y= TotalCharges, x = "", fill = Churn)) + 
+#   geom_boxplot()+ 
+#   theme_bw()+
+#   xlab(" ")
 
 # correlation between numeric
-options(repr.plot.width =6, repr.plot.height = 4)
-telco_cor <- round(cor(df_telco[,c("tenure", "MonthlyCharges", "TotalCharges")]), 1)
-ggcorrplot(telco_cor,  title = "Correlation")+theme(plot.title = element_text(hjust = 0.5))
+# options(repr.plot.width =6, repr.plot.height = 4)
+# telco_cor <- round(cor(df_telco[,c("tenure", "MonthlyCharges", "TotalCharges")]), 1)
+# ggcorrplot(telco_cor,  title = "Correlation")+theme(plot.title = element_text(hjust = 0.5))
 
 # change no phone and no internet to NO
 df_telco <- data.frame(lapply(df_telco, function(x) {
@@ -138,32 +138,25 @@ colnames(df_telco_final)
 
 # churn as factor
 df_telco_final$churn = as.factor(df_telco_final$churn)
-save(df_telco_final, file = "data/df_telco_final.rda")
+# save(df_telco_final, file = "data/df_telco_final.rda")
 
 # launch swag
 y = df_telco_final$churn
 x = df_telco_final %>% dplyr::select(-c(churn, customer_id))
 
-# Training and test set
-set.seed(180) # for replication
-ind <- sample(1:dim(x)[1],dim(x)[1]*0.15)  
-y_test <- y[ind]
-y_train <- y[-ind]
-x_test <- x[ind,]
-x_train <-x[-ind,]
 
 # Meta-parameters chosen for swag
 swagcon <- swagControl(pmax = 15L, 
                        alpha = 0.3, 
-                       m = 90L,
+                       m = 200L,
                        seed = 163L, #for replicability
                        verbose = T #keeps track of completed dimensions
 )
 
 train_swag_glm <- swag(
   # arguments for swag
-  x = x_train, 
-  y = y_train, 
+  x = x, 
+  y = y, 
   control = swagcon,
   auto_control = FALSE,
   # arguments for caret
@@ -173,4 +166,4 @@ train_swag_glm <- swag(
   family = "binomial"
 )
 
-save(train_swag_glm, file ="data/train_swag_glm.rda")
+save(train_swag_glm, file ="data/train_swag_glm_2_int.rda")
