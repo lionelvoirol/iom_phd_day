@@ -61,3 +61,62 @@ return_glm_beta_selected_models <- function(swag_summary) {
   ))
   return(out)
 }
+
+
+
+
+# extract CV from best models
+extract_cv_best_model = function(object,
+                                 min_dim_method = "median",
+                                 min_dim_min_cv_error_quantile = 0.01){
+  
+  object = train_swag_glm_sub
+  min_dim_method = "min"
+  min_dim_min_cv_error_quantile = 0.25
+  
+  # define CV and varmat
+  CVs <- object$CVs
+  VarMat <- object$VarMat
+  
+  # compute maximum dimension explored
+  dmax <- length(object$CVs)
+  dim_model <- seq_len(dmax)
+  
+  # find_dimension with lowest (min, mean, median)
+  if (!min_dim_method %in% c("mean", "median", "min")) {
+    stop("Please provided a supported method for selecting the minimum dimension for selecting models. \n Supported functions are min, median, mean")
+  }
+  
+  if (min_dim_method == "min") {
+    mod_size_min <- which.min(unlist(lapply(CVs[1:dmax], min)))
+  } else if (min_dim_method == "median") {
+    mod_size_min <- which.min(unlist(lapply(CVs[1:dmax], median)))
+  } else if (min_dim_method == "mean") {
+    mod_size_min <- which.min(unlist(lapply(CVs[1:dmax], mean)))
+  }
+  
+  # get the quantile in  dimensions with the lowest (min, median, mean)
+  quantile_value <- quantile(CVs[[mod_size_min]], min_dim_min_cv_error_quantile, na.rm = TRUE)
+  
+  # save all models in all dimensions for which the cv error is below the selected quantile
+  df_cv_dim = data.frame("dimension" =NA, "cv" =NA, "best_model"=NA)
+  index_model_select <- vector("list", dmax)
+  for (i in dim_model) {
+
+    # save in these dimensions
+    index_model_select[[i]] <- which(((CVs[[dim_model[i]]] <= quantile_value)))
+    # if(length(index_model_select[[i]] ) != 0){
+    
+      mat_cv_dim_i = cbind(i, CVs[[dim_model[i]]], 0)
+      colnames(mat_cv_dim_i) = c("dimension", "cv", "best_model")
+      mat_cv_dim_i[index_model_select[[i]], "best_model"] =T
+      df_cv_dim = rbind(df_cv_dim, mat_cv_dim_i)
+    # }
+    
+  }
+  df_cv_dim = na.omit(df_cv_dim)
+  df_cv_dim$best_model = as.factor(df_cv_dim$best_model)
+  
+  return(df_cv_dim)
+  
+}

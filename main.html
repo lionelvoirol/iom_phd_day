@@ -4,6 +4,7 @@
     <title>Modelling and Data Analytics for Pharmaceutical Sciences</title>
     <meta charset="utf-8" />
     <meta name="author" content="Stéphane Guerrier" />
+    <script src="main_files/header-attrs-2.8/header-attrs.js"></script>
     <link href="main_files/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="main_files/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
     <link href="main_files/remark-css-0.0.1/metropolis-fonts.css" rel="stylesheet" />
@@ -16,6 +17,11 @@
     <script src="main_files/xaringanExtra-clipboard-0.2.4/xaringanExtra-clipboard.js"></script>
     <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
     <link href="main_files/xaringanExtra-extra-styles-0.2.4/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <script src="main_files/kePrint-0.0.1/kePrint.js"></script>
+    <link href="main_files/lightable-0.0.1/lightable.css" rel="stylesheet" />
+    <script src="main_files/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+    <script src="main_files/pymjs-1.3.2/pym.v1.js"></script>
+    <script src="main_files/widgetframe-binding-0.3.1/widgetframe.js"></script>
     <link rel="stylesheet" href="my-css.css" type="text/css" />
   </head>
   <body>
@@ -107,7 +113,7 @@ However, this approach has some drawbacks:
 
 # How to address these limitations?
 
-A possible solution: The "SWAG" algorithm proposed in Guerrier et al. (2016) is an heuristic approach that aims to address (some of ) these issues.  Itsgoals are the following:FindingALLmodels (and parameters) minimizing an out-of-sampleobjective function (e.g.  classification error).Restricting our attention to the models with the smallest dimension.
+A possible solution: The "SWAG" algorithm proposed in Guerrier et al. (2016) is an heuristic approach that aims to address (some of ) these issues.  Its goals are the following: Finding ALL models (and parameters) minimizing an out-of-sample objective function (e.g.  classification error).Restricting our attention to the models with the smallest dimension.
 
 An example:We applied our methodology to well-known data-set on the classificationof Acute Myeloid Leukemia (AML) against Acute Lymphoblastic Leukemia(ALL) (seeGolub et al., 1999, Science).
 
@@ -118,7 +124,7 @@ An example:We applied our methodology to well-known data-set on the classificati
 .panelset[
 .panel[.panel-name[Classification error]
 
-&lt;img src="pics/table.png" width="90%" style="display: block; margin: auto;" /&gt;
+&lt;img src="pics/Table.png" width="90%" style="display: block; margin: auto;" /&gt;
 
 &lt;center&gt;
 .tiny[Adapted from Guerrier et al. (2016).]
@@ -144,7 +150,7 @@ An example:We applied our methodology to well-known data-set on the classificati
 
 # Additional advantage 
 
-Most statistical methods are used to deliver estimates and predictionsfor different problems with the goal of using these results fordecision-making(e.g.  whether a patient should be treated, selectinga drug or its dosage).The vast majority of these methods areindependentof the contextof this decision-making process and the approach used to obtainmodel’s parameters (and prediction) is fixed for all applications.Thiscan lead to contradictory examples(e.g.  asymmetric “risk” oftreating vs not treating a patient).Indeed, not all prediction errors are the “same” or have similar“impacts”.
+Most statistical methods are used to deliver estimates and predictions for different problems with the goal of using these results for decision-making(e.g.  whether a patient should be treated, selecting a drug or its dosage).The vast majority of these methods are independent of the context of this decision-making process and the approach used to obtain model’s parameters (and prediction) is fixed for all applications.This can lead to contradictory examples(e.g.  asymmetric “risk” of treating vs not treating a patient).Indeed, not all prediction errors are the “same” or have similar “impacts”.
 
 ---
 
@@ -169,29 +175,212 @@ Most statistical methods are used to deliver estimates and predictionsfor differ
 - Banks, telephone service companies, Internet service providers and other similar companies, often use customer attrition rates as one of their key business metrics.
 - Adequate (probabilistic) modeling of customer churn is therefore a problem of interest. A classical and standard approach to model such data is following:
 
-SOME BLABLA
-
-# WHAT ARE THE DATA
+We first consider a simple variable selection method based on the Akaike information criterion  (AIC). We consider a stepwise AIC-based variable selection method. This is a standard approach and proceed to greedy variable selection based on the AIC. Considering this method, we obtain the following estimated model:
 
 ---
 
-# SIMPLE ANALYSIS
+# .smallest[Customer churn: Dataset]
 
-AIC + logisitc
+We consider the [*Telco customer churn*](https://community.ibm.com/community/user/businessanalytics/blogs/steven-macko/2019/07/11/telco-customer-churn-1113) that provides information about customers of a telecom company and whether or not left the clientele of the company.
+
+The data set includes information about:
+
+- Customers who left within the last month – the column is called Churn
+
+- Services that each customer has signed up for – phone, multiple lines, internet, online security, online backup, device protection, tech support, and streaming TV and movies
+
+- Customer account information – how long they have been a customer, contract, payment method, paperless billing, monthly charges, and total charges
+
+- Demographic info about customers – gender, age range, and if they have partners and dependents
+---
+
+
+```
+#&gt; # A tibble: 6 x 21
+#&gt;   customerID gender SeniorCitizen Partner Dependents tenure PhoneService MultipleLines InternetService OnlineSecurity
+#&gt;   &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;         &lt;chr&gt;           &lt;chr&gt;         
+#&gt; 1 7590-VHVEG Female             0 Yes     No              1 No           No phone ser… DSL             No            
+#&gt; 2 5575-GNVDE Male               0 No      No             34 Yes          No            DSL             Yes           
+#&gt; 3 3668-QPYBK Male               0 No      No              2 Yes          No            DSL             Yes           
+#&gt; 4 7795-CFOCW Male               0 No      No             45 No           No phone ser… DSL             Yes           
+#&gt; 5 9237-HQITU Female             0 No      No              2 Yes          No            Fiber optic     No            
+#&gt; 6 9305-CDSKC Female             0 No      No              8 Yes          Yes           Fiber optic     No            
+#&gt; # … with 11 more variables: OnlineBackup &lt;chr&gt;, DeviceProtection &lt;chr&gt;, TechSupport &lt;chr&gt;, StreamingTV &lt;chr&gt;,
+#&gt; #   StreamingMovies &lt;chr&gt;, Contract &lt;chr&gt;, PaperlessBilling &lt;chr&gt;, PaymentMethod &lt;chr&gt;, MonthlyCharges &lt;dbl&gt;,
+#&gt; #   TotalCharges &lt;dbl&gt;, Churn &lt;chr&gt;
+```
+
+
+
+
+
+---
+# .smallest[Customer churn: Simple analysis]
+
+&lt;table class="table" style="font-size: 12px; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Estimate &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Std. Error &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; z value &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Pr(&amp;gt;|z|) &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; (Intercept) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.3552875 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2128237 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.669398 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0950386 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; tenure &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0602519 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0061253 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -9.836533 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; internet_service_x_fiber_optic &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2948369 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1591085 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.853056 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0638744 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; internet_service_x_no &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.3300755 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1945870 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.696287 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0898315 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; contract_x_two_year &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.3537957 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1764398 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -7.672847 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; contract_x_one_year &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.6609592 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1075567 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -6.145215 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; payment_method_x_electronic_check &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.3538913 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0692388 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.111170 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000003 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; paperless_billing &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.3464571 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0743177 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.661837 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000031 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; online_security &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.4952109 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0868370 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -5.702765 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; total_charges &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0003271 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000701 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.667379 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000031 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; phone_service &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.9995716 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1560913 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -6.403762 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; tech_support &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.4726258 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0905859 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -5.217431 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000002 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; monthly_charges &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0180637 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0049872 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.621986 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0002923 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; online_backup &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.2642023 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0800952 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -3.298605 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0009717 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; senior_citizen &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2158180 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0839455 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.570930 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0101426 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; multiple_lines &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1578324 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0835585 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.888884 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0589074 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; dependents &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.1475798 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0813653 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.813793 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0697095 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; device_protection &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.1395521 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0859348 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.623929 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1043909 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
 
 ---
 
 # SWAG
 
-WE find many models
+We find many models with equivalent estimated out-of-sample prediction error.
+
+<div id="htmlwidget-8f737d41de32f852e956" style="width:100%;height:40%;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-8f737d41de32f852e956">{"x":{"url":"main_files/figure-html//widgets/widget_unnamed-chunk-10.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
 
 ---
 
 # SWAG NETWORK
 
+We can represent the relationship between variables in the best performing models (with respect to the estimated out of sample error) with such a graph. Each chord represent the number of time two variables were included in a model among the best performing models.
+
+
+
+
 ---
 
 # SWAG MACHINE LEARNING
+
+
 
 ---
 
