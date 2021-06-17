@@ -422,7 +422,7 @@ g1 = ggplot(dimension_cv, aes(x=dimension,y=cv, colour =  best_model))+
   geom_point(position = "jitter") + xlab("Model dimension")+
   scale_color_manual(values = c("#00008B80", "#FF8C0080")) +
   ylab("Cross-Validation Error") +
-  ylim(0.19, 0.24)+
+  ylim(0.19, 0.23)+
   theme_minimal(base_size = 20) + 
   geom_point(aes(x=dim_mdl_aic, y=error_aic_selected), 
              colour="red", size =5, alpha =.5)+
@@ -450,8 +450,12 @@ We can represent the relationship between variables in the best performing model
 ```{r, echo =F, fig.align='center'}
 library(chorddiag)
 load("data/mat_3.rda")
-l2 = chorddiag(mat_3, groupnamePadding = 10, categorynameFontsize = 6)
-frameWidget(l2,  width ='65%')
+complete_names = colnames(mat_3)
+abr = substr( complete_names , start = 1 , stop = 3 )
+rownames(mat_3) = abr
+colnames(mat_3) = abr
+l2 = chorddiag(mat_3, groupnamePadding = 10, categorynameFontsize = 6, tooltipNames = complete_names)
+frameWidget(l2,  width ='100%')
 ```
 
 </div>
