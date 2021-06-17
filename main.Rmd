@@ -346,12 +346,12 @@ include_graphics("pics/fun2.png")
 
 We consider the [*Telco customer churn*](https://community.ibm.com/community/user/businessanalytics/blogs/steven-macko/2019/07/11/telco-customer-churn-1113) that provides information about .purple2[customers of a telecom company and whether or not they left the company].
 
-The data set includes information about:
+The dataset includes information about:
 
-- .pink[Customers who left within the last month]
-- .pink[Services that each customer has signed up for] (e.g. phone, multiple lines, internet, online security, ...)
-- .pink[Customer account information] (e.g. how long they have been a customer, contract, payment method, ...)
-- .pink[Demographic info] (e.g. gender, age range, ...)
+- .pink[Customers who left within the last month].
+- .pink[Services that each customer has signed up for] (e.g. phone, multiple lines, internet, online security, ...).
+- .pink[Customer account information] (e.g. how long they have been a customer, contract, payment method, ...).
+- .pink[Demographic info] (e.g. gender, age range, ...).
 
 This dataset is relatively large with $10^4$ observations and more than $50$ variables.
 
@@ -495,17 +495,12 @@ We can represent the relationship between variables in the best performing model
 ```{r, echo =F, fig.align='center'}
 library(chorddiag)
 load("data/mat_3.rda")
-diag(mat_3) = 0
-mat_3[lower.tri(mat_3)]  <- t(mat_3)[lower.tri(mat_3)]
-isSymmetric(mat_3)
 complete_names = colnames(mat_3)
 abr = substr( complete_names , start = 1 , stop = 3 )
 rownames(mat_3) = abr
 colnames(mat_3) = abr
 l2 = chorddiag(mat_3, groupnamePadding = 10, categorynameFontsize = 6, tooltipNames = complete_names)
-l2
 frameWidget(l2,  width ='100%')
-
 ```
 
 </div>
