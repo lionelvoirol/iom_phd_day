@@ -238,23 +238,25 @@ How statisticians (typically) understand this definition:
 
 ---
 
-# Is this a good idea? 🤔
+# .smallest[Is this a good idea?] 🤔
 
 According to our understanding of the problem (i.e. .purple2[single model based on likelihood methods]): .hi.pink[YES!] 
 
 However, this approach has some drawbacks:
 
-- Focusing on a single model suggests a level of confidence in our final result that is not justified by the data as other models generally exist with similar goodness of fit.
-- Maximizing the likelihood function does not guarantee finding the best model(s) (and parameters) according to a given out-of-sample objective function.
-- These methods are prone to overfitting (due to the asymmetric effects of "under" vs "over" fitting).
+- Focusing on a .hi.purple2[single model suggests a level of confidence in our final result that is not justified by the data] as other models generally exist with similar goodness of fit.
+- Maximizing the likelihood function .purple2[does not guarantee finding the best model(s)] (and parameters) according to a given out-of-sample objective function.
+- These methods are prone to .purple2[overfitting] (due to the asymmetric effects of "under" vs "over" fitting).
 
 ---
 
-# How to address these limitations?
+# .smallest[How to address these limitations?]
 
-A possible solution: The "SWAG" algorithm proposed in Guerrier et al. (2016) is an heuristic approach that aims to address (some of ) these issues.  Its goals are the following: Finding ALL models (and parameters) minimizing an out-of-sample objective function (e.g.  classification error).Restricting our attention to the models with the smallest dimension.
-
-An example:We applied our methodology to well-known data-set on the classificationof Acute Myeloid Leukemia (AML) against Acute Lymphoblastic Leukemia(ALL) (seeGolub et al., 1999, Science).
+- A possible solution is the .pink[SWAG algorithm] proposed in Guerrier et al. (2016) and later improved in Molinari et al. (2021). This .purple2[wrapper] method aims to alleviate (some of) these issues and .purple2[is build "on top" of an arbitrary predictive method] (e.g. logistic regression, random forest, ANN). 
+- Its goals are the following:
+    - Finding ALL models (and parameters) minimizing an out-of-sample objective function (e.g.  classification error).
+    - Restricting our attention to the models with the smallest dimension.
+- As an example, we applied in Guerrier et al. (2016) our methodology to well-known dataset on the .purple2[classification of Acute Myeloid Leukemia (AML) against Acute Lymphoblastic Leukemia (ALL)] (see Golub et al., 1999).
 
 ---
 
@@ -291,26 +293,36 @@ include_graphics("pics/network.png")
 
 ---
 
-# Additional advantage 
+# .smallest[Context of the analysis]
 
-Most statistical methods are used to deliver estimates and predictions for different problems with the goal of using these results for decision-making (e.g.  whether a patient should be treated, selecting a drug or its dosage). The vast majority of these methods are independent of the context of this decision-making process and the approach used to obtain model’s parameters (and prediction) is fixed for all applications.This can lead to contradictory examples (e.g.  asymmetric “risk” of treating vs not treating a patient). Indeed, not all prediction errors are the “same” or have similar “impacts”.
+- Most statistical methods are used to deliver estimates and predictions for different problems with the goal of using these results for decision-making (e.g. whether a patient should be treated, selecting a drug or its dosage). 
+- The vast majority of these methods are independent of the context of this decision-making process and the approach used to obtain model's parameters (and prediction) is fixed for all applications.
+- This can lead to contradictory examples (e.g.  asymmetric "risk" of treating vs not treating a patient). Indeed, not all prediction errors are the "same" or have similar "impacts".
 
 ---
 
-# .smallest[Not all classification errors are the same]
+# .smallest[Not all classification errors are the same...] 🙄
 
 .pull-left[
 <br>
-```{R, out.width = "70%", echo = F}
+```{R, out.width = "65%", echo = F}
 include_graphics("pics/fun1.png")
 ```
+
+<center>
+.hisg[Type I error] (false positive)
+</center>
 
 ]
 .pull-right[
 <br>
-```{R, out.width = "70%", echo = F}
+```{R, out.width = "65%", echo = F}
 include_graphics("pics/fun2.png")
 ```
+
+<center>
+.hisg[Type II error] (false negative)
+</center>
 
 ]
 

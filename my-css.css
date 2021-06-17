@@ -63,6 +63,10 @@ content: "";
   font-weight: 600;
   color: #fb6107 !important;
 }
+
+.hisg {
+  font-weight: 600 !important;
+}
 /* Pink text */
 .pink {
   color: #eb078e !important;
