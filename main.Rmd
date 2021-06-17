@@ -230,7 +230,7 @@ include_graphics("pics/network_breast_paper.png")
 # .smallest[Logistic Regression]
 
 - In statistics, the .hi.purple2[logistic model] is used to .purple2[model the probability of a certain event existing] such as pass/fail, healthy/sick or buying/not buying an item.
-- In most (modern) empirical studies, a large number of variables are measured (often larger than the number of observation) and therefore researchers generally try to .purple2[identify the smallest possible set of variables that can still achieve good predictive performance]. This taks is often referred to as model (or variable) selection.
+- In most (modern) empirical studies, a large number of variables are measured (often larger than the number of observation) and therefore researchers generally try to .purple2[identify the smallest possible set of variables that can still achieve good predictive performance]. This task is often referred to as model (or variable) selection.
 
 How statisticians (typically) understand this definition:
 - We are looking for a .pink[single model].
@@ -253,11 +253,11 @@ However, this approach has some drawbacks:
 
 # .smallest[How to address these limitations?]
 
-- A possible solution is the .pink[SWAG algorithm] proposed in Guerrier et al. (2016) and later improved in Molinari et al. (2021). This .purple2[wrapper] method aims to alleviate (some of) these issues and .purple2[is build "on top" of an arbitrary predictive method] (e.g. logistic regression, random forest, ANN, ...). 
+- A possible solution is the .pink[SWAG algorithm] proposed in Guerrier et al. (2016) and later improved in Molinari et al. (2021). This .purple2[wrapper] method aims to alleviate (some of) these issues and .purple2[is built "on top" of an arbitrary predictive method or algorithm] (e.g. logistic regression, random forest, ANN, ...). 
 - Its goals are the following:
-    - Finding ALL models (and parameters) minimizing an out-of-sample objective function (e.g.  classification error).
+    - Finding ALL models (and parameters) minimizing an out-of-sample user-defined objective function (e.g.  classification error).
     - Restricting our attention to the models with the smallest dimension.
-- As an example, we applied in Guerrier et al. (2016) our methodology to well-known dataset on the .purple2[classification of Acute Myeloid Leukemia (AML) against Acute Lymphoblastic Leukemia (ALL)] (see Golub et al., 1999).
+- As an example, we applied in Guerrier et al. (2016) our methodology to a well-known dataset on the .purple2[classification of Acute Myeloid Leukemia (AML) against Acute Lymphoblastic Leukemia (ALL)] (see Golub et al., 1999).
 
 ---
 
@@ -298,12 +298,12 @@ include_graphics("pics/network.png")
 
 - Most statistical methods are used to deliver estimates and predictions for different problems with .purple2[the goal of using these results for decision-making] (e.g. whether a patient should be treated, selecting a drug or its dosage, marketing strategy, ...). 
 - The vast majority of these methods are .hi.pink[independent] of the context of this decision-making process and the approach used to obtain model's parameters (and prediction) is .hi.pink[fixed] for all applications.
-- This can lead to .puple2[contradictory examples] (e.g.  asymmetric "risk" of treating vs not treating a patient). Indeed, not all prediction errors are the "same" or have similar "impacts".
-- The SWAG allows to .purple2[incorporate] the "context" of the decision-making (e.g. weighted risks).
+- This can lead to .purple2[contradictory examples] (e.g.  asymmetric "risk" of treating vs not treating a patient). Indeed, not all prediction errors are the "same" or have similar "impacts" (e.g. missing on a good investment opportunity or investing in a bad one).
+- The SWAG allows to .purple2[incorporate] the "context" of the decision-making through its user-defined objective function (e.g. weighted risks).
 
 ---
 
-# .smallest[Not all classification errors are the same...] 🙄
+# .smallest[Not all classification errors are the same...] 🤔
 
 .pull-left[
 <br>
