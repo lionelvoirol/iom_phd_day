@@ -438,7 +438,7 @@ We can represent the relationship between variables in the best performing model
 ```{r, echo =F, fig.align='center'}
 library(chorddiag)
 load("data/mat_3.rda")
-l2 = chorddiag(mat_3, groupnamePadding = 10)
+l2 = chorddiag(mat_3, groupnamePadding = 10, categorynameFontsize = 6)
 frameWidget(l2,  width ='65%')
 ```
 
