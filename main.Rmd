@@ -293,7 +293,7 @@ include_graphics("pics/network.png")
 
 # Additional advantage 
 
-Most statistical methods are used to deliver estimates and predictions for different problems with the goal of using these results for decision-making(e.g.  whether a patient should be treated, selecting a drug or its dosage).The vast majority of these methods are independent of the context of this decision-making process and the approach used to obtain model’s parameters (and prediction) is fixed for all applications.This can lead to contradictory examples(e.g.  asymmetric “risk” of treating vs not treating a patient).Indeed, not all prediction errors are the “same” or have similar “impacts”.
+Most statistical methods are used to deliver estimates and predictions for different problems with the goal of using these results for decision-making (e.g.  whether a patient should be treated, selecting a drug or its dosage). The vast majority of these methods are independent of the context of this decision-making process and the approach used to obtain model’s parameters (and prediction) is fixed for all applications.This can lead to contradictory examples (e.g.  asymmetric “risk” of treating vs not treating a patient). Indeed, not all prediction errors are the “same” or have similar “impacts”.
 
 ---
 
