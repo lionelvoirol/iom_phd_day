@@ -138,16 +138,19 @@ vec_name_2 = str_replace(vec_name, pattern = "_", replacement = " ")
 vec_name_3 = str_replace(vec_name_2, pattern = "_x_", replacement = " ")
 vec_name_4 = str_replace(vec_name_3, pattern = "x_", replacement = " ")
 vec_name_5 = str_replace(vec_name_4, pattern = "_", replacement = " ")
-dimnames(mat_3)[1] =  vec_name_5
-dimnames(mat_3)[2] = vec_name_5
+rownames(mat_3) = vec_name_5
+colnames(mat_3) = vec_name_5
+# dimnames(mat_3)[2] = vec_name_5
 # fill matrix
 # mat_3[lower.tri(mat_3)] = mat_3[upper.tri(mat_3)]
 
-dimnames(mat_3)[1]
-
 
 library(chorddiag)
+load("data/mat_3")
+chorddiag(mat_3, groupnamePadding = 10)
 
+save(mat_3, file="data/mat_3.rda")
+load("data/mat_3")
 chorddiag(mat_3, groupnamePadding = 10)
 
 # Libraries
