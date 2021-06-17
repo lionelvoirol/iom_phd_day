@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Modelling and Data Analytics for Pharmaceutical Sciences</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Stéphane Guerrier" />
+    <link href="main_files/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="main_files/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
+    <link href="main_files/remark-css-0.0.1/metropolis-fonts.css" rel="stylesheet" />
+    <link href="main_files/tile-view-0.2.4/tile-view.css" rel="stylesheet" />
+    <script src="main_files/tile-view-0.2.4/tile-view.js"></script>
+    <link href="main_files/panelset-0.2.4/panelset.css" rel="stylesheet" />
+    <script src="main_files/panelset-0.2.4/panelset.js"></script>
+    <script src="main_files/clipboard-2.0.6/clipboard.min.js"></script>
+    <link href="main_files/xaringanExtra-clipboard-0.2.4/xaringanExtra-clipboard.css" rel="stylesheet" />
+    <script src="main_files/xaringanExtra-clipboard-0.2.4/xaringanExtra-clipboard.js"></script>
+    <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
+    <link href="main_files/xaringanExtra-extra-styles-0.2.4/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="my-css.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+
+
+
+
+
+class: title-slide  
+&lt;div class="my-logo-right"&gt;&lt;/div&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+ 
+# IOM PhD Day - Friday 18 June 2021
+
+## SWAG: A Wrapper Method for Sparse Learning
+
+&lt;br&gt;
+### .smaller[Stéphane Guerrier]
+
+
+
+
+
+---
+
+# .smallest[Research Areas]
+
+&lt;br&gt;
+&lt;img src="pics/areas.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# .smallest[A New Wrapper Method for Sparse Learning]
+
+.pull-left[
+
+&lt;img src="pics/SWAG2.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+.smaller[📄 [https://arxiv.org/abs/2006.12837](https://arxiv.org/abs/2006.12837)]
+
+]
+.pull-right[
+
+&lt;br&gt;
+&lt;img src="pics/network_breast_paper.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+.smallest[Example of .hi.purple[predictive network] based on the breast cancer dataset of Haakensen et al. (2016)].
+
+.smaller[SWAG R 📦 available on CRAN [here](https://cran.r-project.org/web/packages/swag/index.html).]
+
+
+
+]
+
+
+---
+
+# .smallest[Logistic Regression]
+
+- In statistics, the .hi.purple2[logistic model] is used to .purple2[model the probability of a certain event existing] such as pass/fail, healthy/sick or buying/not buying an item.
+- In most (modern) empirical studies, a large number of variables are measured (often larger than the number of observation) and therefore researchers generally try to .purple2[identify the smallest possible set of variables that can still achieve good predictive performance]. This taks is often referred to as model (or variable) selection.
+
+How statisticians (typically) understand this definition:
+- We are looking for a .pink[single model].
+- For a given candidate model, picking the .pink[most likely parameters] given the data is optimal (i.e.  maximum likelihood estimation).
+- Predictive performance can be measured by the .pink[likelihood function] (typically out-of-sample criteria such as AIC or BIC).
+
+---
+
+# Is this a good idea? 🤔
+
+According to our understanding of the problem (i.e. .purple2[single model based on likelihood methods]): .hi.pink[YES!] 
+
+However, this approach has some drawbacks:
+
+- Focusing on a single model suggests a level of confidence in our final result that is not justified by the data as other models generally exist with similar goodness of fit.
+- Maximizing the likelihood function does not guarantee finding the best model(s) (and parameters) according to a given out-of-sample objective function.
+- These methods are prone to overfitting (due to the asymmetric effects of "under" vs "over" fitting).
+
+---
+
+# How to address these limitations?
+
+A possible solution: The "SWAG" algorithm proposed in Guerrier et al. (2016) is an heuristic approach that aims to address (some of ) these issues.  Itsgoals are the following:FindingALLmodels (and parameters) minimizing an out-of-sampleobjective function (e.g.  classification error).Restricting our attention to the models with the smallest dimension.
+
+An example:We applied our methodology to well-known data-set on the classificationof Acute Myeloid Leukemia (AML) against Acute Lymphoblastic Leukemia(ALL) (seeGolub et al., 1999, Science).
+
+---
+
+# .smallest[Leukemia Dataset]
+
+.panelset[
+.panel[.panel-name[Classification error]
+
+&lt;img src="pics/table.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+&lt;center&gt;
+.tiny[Adapted from Guerrier et al. (2016).]
+&lt;/center&gt;
+
+
+]
+.panel[.panel-name[SWAG-based network]
+
+&lt;br&gt;
+&lt;img src="pics/network.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+&lt;br&gt;
+
+&lt;center&gt;
+.tiny[Adapted from Guerrier et al. (2016).]
+&lt;/center&gt;
+
+]
+]
+
+---
+
+# Additional advantage 
+
+Most statistical methods are used to deliver estimates and predictionsfor different problems with the goal of using these results fordecision-making(e.g.  whether a patient should be treated, selectinga drug or its dosage).The vast majority of these methods areindependentof the contextof this decision-making process and the approach used to obtainmodel’s parameters (and prediction) is fixed for all applications.Thiscan lead to contradictory examples(e.g.  asymmetric “risk” oftreating vs not treating a patient).Indeed, not all prediction errors are the “same” or have similar“impacts”.
+
+---
+
+# .smallest[Not all classification errors are the same]
+
+.pull-left[
+&lt;br&gt;
+&lt;img src="pics/fun1.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+]
+.pull-right[
+&lt;br&gt;
+&lt;img src="pics/fun2.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+# .smallest[Example: Customer churn]
+
+- Customer churn or attrition corresponds to the loss of clients or customers.
+- Banks, telephone service companies, Internet service providers and other similar companies, often use customer attrition rates as one of their key business metrics.
+- Adequate (probabilistic) modeling of customer churn is therefore a problem of interest. A classical and standard approach to model such data is following:
+
+SOME BLABLA
+
+# WHAT ARE THE DATA
+
+---
+
+# SIMPLE ANALYSIS
+
+AIC + logisitc
+
+---
+
+# SWAG
+
+WE find many models
+
+---
+
+# SWAG NETWORK
+
+---
+
+# SWAG MACHINE LEARNING
+
+---
+
+# END!
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
