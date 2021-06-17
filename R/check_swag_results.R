@@ -54,6 +54,68 @@ g1 = ggplot(dimension_cv, aes(x=dimension,y=cv, colour =  best_model))+
 
 
 plotly::ggplotly(g1)
+
+
+# density plot error
+dimension_cv_sub 
+ggplot(dimension_cv) +
+  aes(x = cv) +
+  geom_density(adjust = 1L, fill = "#cae2f9") +
+  theme_minimal(base_size = 22) + ylab("Density")+
+  xlab("Cross-Validation Error") + geom_vline(xintercept =  error_aic_selected)+
+
+  annotate("text", x = .212, y = 70,
+           label = "Cross-Validation Error \n of AICselected model") +
+  ggtitle("Cross Validation Error of all models")
+  
+
+# lolipop chart pvalue
+load("data/selected_model_aic.rda")
+df_1 = summary(selected_model_aic)
+df_1$coefficients[,4]
+x = names(df_1$coefficients[,4])
+y = df_1$coefficients[,4]
+df_pval = data.frame("pvalue" = y, "variable" = x)
+df_pval = df_pval%>% arrange(pvalue)
+par(mar=c(6,18,6,1))
+plot(df_pval$pvalue,seq(length(df_pval$variable)),
+     ylab = "",pch=16 ,xlab="p-value",
+     main = "Variable significance",
+     cex=1.5, yaxt='n', cex.axis=1.5, cex.lab = 2)
+vec_name = df_pval$variable
+vec_name_2 = str_replace(vec_name, pattern = "_", replacement = " ")
+vec_name_3 = str_replace(vec_name_2, pattern = "_x_", replacement = " ")
+vec_name_4 = str_replace(vec_name_3, pattern = "x_", replacement = " ")
+vec_name_5 = str_replace(vec_name_4, pattern = "_", replacement = " ")
+axis(side = 2, at = seq(length(df_pval$pvalue)), 
+     labels = vec_name_5, las = 2, cex.axis = 1.2)
+for(i in seq(length(vec_name_5))){
+  segments(x0 = 0, y0 = i, x1 = df_pval[i, "pvalue"], y1 = i)
+}
+abline(v = .05)
+
+
+
+
+
+# Plot
+p <- ggplot(df_pval, aes(x=pvalue, y=variable)) +
+  geom_segment(
+    aes(x=x, xend=x, y=0, yend=y))
+  ) +
+  geom_point(
+    color=ifelse(data$x %in% c("A","D"), "orange", "grey"), 
+    size=ifelse(data$x %in% c("A","D"), 5, 2)
+  ) +
+  theme_ipsum() +
+  coord_flip() +
+  theme(
+    legend.position="none"
+  ) +
+  xlab("") +
+  ylab("Value of Y") +
+  ggtitle("How did groups A and D perform?")
+
 ####
 # graph polygon with error
 ####
