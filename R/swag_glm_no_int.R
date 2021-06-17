@@ -4,6 +4,8 @@
 
 rm(list=ls())
 
+# libraries
+library(dplyr)
 library(MASS)
 
 # load telco
@@ -14,6 +16,7 @@ df_telco <- df_telco[complete.cases(df_telco),]
 
 # transform to factor
 df_telco$SeniorCitizen <- as.factor(ifelse(df_telco$SeniorCitizen==1, 'YES', 'NO'))
+
 # change no phone and no internet to NO
 df_telco <- data.frame(lapply(df_telco, function(x) {
   gsub("No internet service", "No", x)}))
@@ -22,7 +25,6 @@ df_telco <- data.frame(lapply(df_telco, function(x) {
   gsub("No phone service", "No", x)}))
 
 # extract categorical variables
-library(dplyr)
 df_telco_cat = df_telco %>% dplyr::select(-c(customerID, tenure, MonthlyCharges, TotalCharges))
 dummy<- data.frame(sapply(df_telco_cat,function(x) data.frame(model.matrix(~x-1,data =df_telco_cat))[,-1]))
 
@@ -37,13 +39,16 @@ df_telco_3$MonthlyCharges = as.numeric(df_telco_3$MonthlyCharges)
 df_telco_3$TotalCharges = as.numeric(df_telco_3$TotalCharges)
 df_telco_3 = janitor::clean_names(df_telco_3)
 
+
+############ stepwise AIC method
+
 null_model = glm(churn~1, data = df_telco_3 %>% dplyr::select(-customer_id), family = "binomial")
 full_model = glm(churn~., data = df_telco_3 %>% dplyr::select(-customer_id), family = "binomial")
-selected_model = step(null_model, scope = list(lower = formula(null_model),
+selected_model_aic = step(null_model, scope = list(lower = formula(null_model),
                                                          upper = formula(full_model)), 
                                             direction = "forward", trace = FALSE)
 
-
+save(selected_model_aic, file="data/selected_model_aic.rda")
 length(selected_model$coefficients)     
 summary(selected_model)
 
@@ -55,7 +60,7 @@ out_accuracy = cv.glm(df_telco_3, selected_model, cost, K = 10)$delta[2]
 out_accuracy
 
 
-
+################################# swag
 
 
 # Meta-parameters chosen for swag
@@ -68,7 +73,7 @@ swagcon <- swagControl(pmax = 15L,
 
 df_telco_3 = na.omit(df_telco_3)
 x = df_telco_3 %>% dplyr::select(-c(customer_id, churn))
-y = df_telco_3 %>% dplyr::select(churn)
+y = df_telco_3$churn
 y = as.factor(y)
 
 library(swag)
@@ -84,6 +89,9 @@ train_swag_glm_sub <- swag(
   method = "glm",
   family = "binomial"
 )
+
+save(train_swag_glm_sub, file = "data/train_swag_glm_sub.rda")
+
 
 
 
