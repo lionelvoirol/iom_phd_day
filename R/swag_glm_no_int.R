@@ -5,8 +5,10 @@
 rm(list=ls())
 
 # libraries
+library(readr)
 library(dplyr)
 library(MASS)
+library(swag)
 
 # load telco
 df_telco <- read_csv("data/customer_churn.csv")
@@ -38,7 +40,8 @@ df_telco_3$tenure = as.numeric(df_telco_3$tenure)
 df_telco_3$MonthlyCharges = as.numeric(df_telco_3$MonthlyCharges)
 df_telco_3$TotalCharges = as.numeric(df_telco_3$TotalCharges)
 df_telco_3 = janitor::clean_names(df_telco_3)
-
+df_telco_no_int = df_telco_3
+save(df_telco_no_int, file = "data/df_telco_no_int.rda")
 
 ############ stepwise AIC method
 
@@ -49,14 +52,14 @@ selected_model_aic = step(null_model, scope = list(lower = formula(null_model),
                                             direction = "forward", trace = FALSE)
 
 save(selected_model_aic, file="data/selected_model_aic.rda")
-length(selected_model$coefficients)     
-summary(selected_model)
+length(selected_model_aic$coefficients)     
+summary(selected_model_aic)
 
 library(boot)
 cost = function(resp, pred){
   mean(resp == (pred > 0.5))
 }
-out_accuracy = cv.glm(df_telco_3, selected_model, cost, K = 10)$delta[2]
+out_accuracy = cv.glm(df_telco_3, selected_model_aic, cost, K = 10)$delta[2]
 out_accuracy
 
 
@@ -64,9 +67,9 @@ out_accuracy
 
 
 # Meta-parameters chosen for swag
-swagcon <- swagControl(pmax = 15L, 
+swagcon <- swagControl(pmax = 20L, 
                        alpha = 0.3, 
-                       m = 90L,
+                       m = 200L,
                        seed = 163L, #for replicability
                        verbose = T #keeps track of completed dimensions
 )
@@ -90,36 +93,36 @@ train_swag_glm_sub <- swag(
   family = "binomial"
 )
 
-save(train_swag_glm_sub, file = "data/train_swag_glm_sub.rda")
+save(train_swag_glm_sub, file = "data/train_swag_glm_no_int.rda")
 
 
 
 
 
-
-
-
-
-
-
-load("data/df_telco_final.rda")
-load("data/train_swag_glm.rda")
-
-# launch swag
-y = df_telco_final$churn
-x = df_telco_final %>% dplyr::select(-c(churn, customer_id))
-
-# Training and test set
-set.seed(180) # for replication
-ind <- sample(1:dim(x)[1],dim(x)[1]*0.15)  
-y_test <- y[ind]
-y_train <- y[-ind]
-x_test <- x[ind,]
-x_train <-x[-ind,]
-
-# load swag results
-table(y_train) / length(y_train)
-
-# check results
-train_swag_glm$CVs
-
+# 
+# 
+# 
+# 
+# 
+# 
+# load("data/df_telco_final.rda")
+# load("data/train_swag_glm.rda")
+# 
+# # launch swag
+# y = df_telco_final$churn
+# x = df_telco_final %>% dplyr::select(-c(churn, customer_id))
+# 
+# # Training and test set
+# set.seed(180) # for replication
+# ind <- sample(1:dim(x)[1],dim(x)[1]*0.15)  
+# y_test <- y[ind]
+# y_train <- y[-ind]
+# x_test <- x[ind,]
+# x_train <-x[-ind,]
+# 
+# # load swag results
+# table(y_train) / length(y_train)
+# 
+# # check results
+# train_swag_glm$CVs
+# 

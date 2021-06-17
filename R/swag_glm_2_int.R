@@ -146,7 +146,7 @@ x = df_telco_final %>% dplyr::select(-c(churn, customer_id))
 
 
 # Meta-parameters chosen for swag
-swagcon <- swagControl(pmax = 15L, 
+swagcon <- swagControl(pmax = 20L, 
                        alpha = 0.3, 
                        m = 200L,
                        seed = 163L, #for replicability
