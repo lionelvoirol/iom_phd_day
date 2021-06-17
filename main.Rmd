@@ -339,12 +339,12 @@ The data set includes information about:
 - Customer account information – how long they have been a customer, contract, payment method, paperless billing, monthly charges, and total charges
 
 - Demographic info about customers – gender, age range, and if they have partners and dependents
----
 
-```{r, echo = F}
+
+```{r, echo = F, warning =F}
 library(readr)
 customer_churn <- read_csv("data/customer_churn.csv")
-head(customer_churn)
+# head(customer_churn)
 ```
 
 
@@ -410,6 +410,7 @@ g1 = ggplot(dimension_cv, aes(x=dimension,y=cv, colour =  best_model))+
   geom_point(position = "jitter") + xlab("Model dimension")+
   scale_color_manual(values = c("#00008B80", "#FF8C0080")) +
   ylab("Cross-Validation Error") +
+  ylim(0.19, 0.24)+
   theme_minimal(base_size = 20) + 
   geom_point(aes(x=dim_mdl_aic, y=error_aic_selected), 
              colour="red", size =5, alpha =.5)+
@@ -430,9 +431,18 @@ frameWidget(l, width='100%', height='40%')
 
 # SWAG NETWORK
 
-We can represent the relationship between variables in the best performing models (with respect to the estimated out of sample error) with such a graph. Each chord represent the number of time two variables were included in a model among the best performing models.
+We can represent the relationship between variables in the best performing models (with respect to the estimated out of sample error) with a chord diagram. Each chord represent the number of time two variables were included in a model among the best performing models.
 
+<div align="center">
 
+```{r, echo =F, fig.align='center'}
+library(chorddiag)
+load("data/mat_3.rda")
+l2 = chorddiag(mat_3, groupnamePadding = 10)
+frameWidget(l2,  width ='65%')
+```
+
+</div>
 
 
 ---

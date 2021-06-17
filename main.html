@@ -192,23 +192,9 @@ The data set includes information about:
 - Customer account information – how long they have been a customer, contract, payment method, paperless billing, monthly charges, and total charges
 
 - Demographic info about customers – gender, age range, and if they have partners and dependents
----
 
 
-```
-#&gt; # A tibble: 6 x 21
-#&gt;   customerID gender SeniorCitizen Partner Dependents tenure PhoneService MultipleLines InternetService OnlineSecurity
-#&gt;   &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;         &lt;chr&gt;           &lt;chr&gt;         
-#&gt; 1 7590-VHVEG Female             0 Yes     No              1 No           No phone ser… DSL             No            
-#&gt; 2 5575-GNVDE Male               0 No      No             34 Yes          No            DSL             Yes           
-#&gt; 3 3668-QPYBK Male               0 No      No              2 Yes          No            DSL             Yes           
-#&gt; 4 7795-CFOCW Male               0 No      No             45 No           No phone ser… DSL             Yes           
-#&gt; 5 9237-HQITU Female             0 No      No              2 Yes          No            Fiber optic     No            
-#&gt; 6 9305-CDSKC Female             0 No      No              8 Yes          Yes           Fiber optic     No            
-#&gt; # … with 11 more variables: OnlineBackup &lt;chr&gt;, DeviceProtection &lt;chr&gt;, TechSupport &lt;chr&gt;, StreamingTV &lt;chr&gt;,
-#&gt; #   StreamingMovies &lt;chr&gt;, Contract &lt;chr&gt;, PaperlessBilling &lt;chr&gt;, PaymentMethod &lt;chr&gt;, MonthlyCharges &lt;dbl&gt;,
-#&gt; #   TotalCharges &lt;dbl&gt;, Churn &lt;chr&gt;
-```
+
 
 
 
@@ -364,16 +350,21 @@ The data set includes information about:
 
 We find many models with equivalent estimated out-of-sample prediction error.
 
-<div id="htmlwidget-8f737d41de32f852e956" style="width:100%;height:40%;" class="widgetframe html-widget"></div>
-<script type="application/json" data-for="htmlwidget-8f737d41de32f852e956">{"x":{"url":"main_files/figure-html//widgets/widget_unnamed-chunk-10.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-ccaf923e813a56340a35" style="width:100%;height:40%;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ccaf923e813a56340a35">{"x":{"url":"main_files/figure-html//widgets/widget_unnamed-chunk-10.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
 
 ---
 
 # SWAG NETWORK
 
-We can represent the relationship between variables in the best performing models (with respect to the estimated out of sample error) with such a graph. Each chord represent the number of time two variables were included in a model among the best performing models.
+We can represent the relationship between variables in the best performing models (with respect to the estimated out of sample error) with a chord diagram. Each chord represent the number of time two variables were included in a model among the best performing models.
 
+&lt;div align="center"&gt;
 
+<div id="htmlwidget-4d5d1e18b34f422b569f" style="width:65%;height:504px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4d5d1e18b34f422b569f">{"x":{"url":"main_files/figure-html//widgets/widget_unnamed-chunk-11.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+
+&lt;/div&gt;
 
 
 ---
