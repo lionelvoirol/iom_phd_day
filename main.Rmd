@@ -463,6 +463,25 @@ frameWidget(l, width='100%', height='40%')
 
 ---
 
+```{r, echo = F}
+# density plot error
+dimension_cv_sub = dimension_cv %>% filter(best_model == 1)
+g2 = ggplot(dimension_cv) +
+  aes(x = cv) +
+  geom_density(adjust = 1L, fill = "#cae2f9") +
+  theme_minimal(base_size = 22) + ylab("Density")+
+  xlab("Cross-Validation Error") + geom_vline(xintercept =  error_aic_selected)+
+
+  annotate("text", x = .212, y = 65,
+           label = "Cross-Validation Error \n of AIC selected model") +
+  ggtitle("Cross Validation Error of all models") + ylim(0,80)
+
+g3 =  plotly::ggplotly(g2)
+frameWidget(g3, width='100%', height='40%')
+```
+
+
+---
 # SWAG NETWORK
 
 We can represent the relationship between variables in the best performing models (with respect to the estimated out of sample error) with a chord diagram. Each chord represent the number of time two variables were included in a model among the best performing models.
