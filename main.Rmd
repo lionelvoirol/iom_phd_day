@@ -466,7 +466,7 @@ frameWidget(l, width='100%', height='40%')
 ```{r, echo = F}
 # density plot error
 dimension_cv_sub = dimension_cv %>% filter(best_model == 1)
-g2 = ggplot(dimension_cv) +
+g2 = ggplot(dimension_cv_sub) +
   aes(x = cv) +
   geom_density(adjust = 1L, fill = "#cae2f9") +
   theme_minimal(base_size = 22) + ylab("Density")+
@@ -494,7 +494,12 @@ complete_names = colnames(mat_3)
 abr = substr( complete_names , start = 1 , stop = 3 )
 rownames(mat_3) = abr
 colnames(mat_3) = abr
+diag(mat_3) <- 0
+mat_3[lower.tri(mat_3)]  <- t(mat_3)[lower.tri(mat_3)]
+mat_3 = mat_3/52
+# isSymmetric(mat_3)
 l2 = chorddiag(mat_3, groupnamePadding = 10, categorynameFontsize = 6, tooltipNames = complete_names)
+# l2
 frameWidget(l2,  width ='100%')
 ```
 
