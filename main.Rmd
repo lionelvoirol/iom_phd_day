@@ -439,7 +439,7 @@ We can represent the relationship between variables in the best performing model
 library(chorddiag)
 load("data/mat_3.rda")
 complete_names = colnames(mat_3)
-abr = substr( complete_names , start = 1 , stop = 2 )
+abr = substr( complete_names , start = 1 , stop = 3 )
 rownames(mat_3) = abr
 colnames(mat_3) = abr
 l2 = chorddiag(mat_3, groupnamePadding = 10, categorynameFontsize = 6, tooltipNames = complete_names)
