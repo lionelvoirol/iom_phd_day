@@ -17,8 +17,6 @@
     <script src="main_files/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.js"></script>
     <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
     <link href="main_files/xaringanExtra-extra-styles-0.2.6/xaringanExtra-extra-styles.css" rel="stylesheet" />
-    <script src="main_files/kePrint-0.0.1/kePrint.js"></script>
-    <link href="main_files/lightable-0.0.1/lightable.css" rel="stylesheet" />
     <script src="main_files/htmlwidgets-1.5.3/htmlwidgets.js"></script>
     <script src="main_files/pymjs-1.3.2/pym.v1.js"></script>
     <script src="main_files/widgetframe-binding-0.3.1/widgetframe.js"></script>
@@ -91,7 +89,7 @@ class: title-slide
 # .smallest[Logistic Regression]
 
 - In statistics, the .hi.purple2[logistic model] is used to .purple2[model the probability of a certain event existing] such as pass/fail, healthy/sick or buying/not buying an item.
-- In most (modern) empirical studies, a large number of variables are measured (often larger than the number of observation) and therefore researchers generally try to .purple2[identify the smallest possible set of variables that can still achieve good predictive performance]. This taks is often referred to as model (or variable) selection.
+- In most (modern) empirical studies, a large number of variables are measured (often larger than the number of observation) and therefore researchers generally try to .purple2[identify the smallest possible set of variables that can still achieve good predictive performance]. This task is often referred to as model (or variable) selection.
 
 How statisticians (typically) understand this definition:
 - We are looking for a .pink[single model].
@@ -114,11 +112,11 @@ However, this approach has some drawbacks:
 
 # .smallest[How to address these limitations?]
 
-- A possible solution is the .pink[SWAG algorithm] proposed in Guerrier et al. (2016) and later improved in Molinari et al. (2021). This .purple2[wrapper] method aims to alleviate (some of) these issues and .purple2[is build "on top" of an arbitrary predictive method] (e.g. logistic regression, random forest, ANN, ...). 
+- A possible solution is the .pink[SWAG algorithm] proposed in Guerrier et al. (2016) and later improved in Molinari et al. (2021). This .purple2[wrapper] method aims to alleviate (some of) these issues and .purple2[is built "on top" of an arbitrary predictive method or algorithm] (e.g. logistic regression, random forest, ANN, ...). 
 - Its goals are the following:
-    - Finding ALL models (and parameters) minimizing an out-of-sample objective function (e.g.  classification error).
+    - Finding ALL models (and parameters) minimizing an out-of-sample user-defined objective function (e.g.  classification error).
     - Restricting our attention to the models with the smallest dimension.
-- As an example, we applied in Guerrier et al. (2016) our methodology to well-known dataset on the .purple2[classification of Acute Myeloid Leukemia (AML) against Acute Lymphoblastic Leukemia (ALL)] (see Golub et al., 1999).
+- As an example, we applied in Guerrier et al. (2016) our methodology to a well-known dataset on the .purple2[classification of Acute Myeloid Leukemia (AML) against Acute Lymphoblastic Leukemia (ALL)] (see Golub et al., 1999).
 
 ---
 
@@ -155,12 +153,12 @@ However, this approach has some drawbacks:
 
 - Most statistical methods are used to deliver estimates and predictions for different problems with .purple2[the goal of using these results for decision-making] (e.g. whether a patient should be treated, selecting a drug or its dosage, marketing strategy, ...). 
 - The vast majority of these methods are .hi.pink[independent] of the context of this decision-making process and the approach used to obtain model's parameters (and prediction) is .hi.pink[fixed] for all applications.
-- This can lead to .puple2[contradictory examples] (e.g.  asymmetric "risk" of treating vs not treating a patient). Indeed, not all prediction errors are the "same" or have similar "impacts".
-- The SWAG allows to .purple2[incorporate] the "context" of the decision-making (e.g. weighted risks).
+- This can lead to .purple2[contradictory examples] (e.g.  asymmetric "risk" of treating vs not treating a patient). Indeed, not all prediction errors are the "same" or have similar "impacts" (e.g. missing on a good investment opportunity or investing in a bad one).
+- The SWAG allows to .purple2[incorporate] the "context" of the decision-making through its user-defined objective function (e.g. weighted risks).
 
 ---
 
-# .smallest[Not all classification errors are the same...] 🙄
+# .smallest[Not all classification errors are the same...] 🤔
 
 .pull-left[
 &lt;br&gt;
@@ -186,11 +184,11 @@ However, this approach has some drawbacks:
 # .smallest[Example: Customer churn]
 
 - Customer churn or attrition corresponds to the loss of clients or customers.
-- Banks, telephone service companies, Internet service providers and other similar companies, often use customer attrition rates as one of their .purple2[key business metrics].
-- Adequate (probabilistic) modeling of customer churn is therefore a problem of interest. A .purple2[classical and standard approach to model such data] is following:
-    - Model the data using logistic regression.
+- Banks, telephone service companies, internet service providers and other similar companies often use customer attrition rates as one of their .purple2[key business metrics].
+- Adequate (probabilistic) modeling of customer churn is therefore a matter of interest. A .purple2[classical and standard approach to model such data] is following:
+    - Model the data using a logistic regression.
     - Select the variables using the AIC (or other similar criteria) in a stepwise (greedy) manner (a popular alternative would be based on the lasso).
-    - Make inference on the variables of interested based on the MLE on the selected model (⚠️ as if the model was known! ⚠️).
+    - Make inference on the variables of interest based on the MLE of the selected model (⚠️ as if the model was known! ⚠️).
 
 
 ---
@@ -214,156 +212,23 @@ This dataset is relatively large with `\(10^4\)` observations and more than `\(5
 
 # .smallest[Customer churn: standard analysis]
 
-&lt;table class="table" style="font-size: 12px; margin-left: auto; margin-right: auto;"&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:left;"&gt;   &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Estimate &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Std. Error &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; z value &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Pr(&amp;gt;|z|) &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; (Intercept) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.3552875 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2128237 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -1.669398 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0950386 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; tenure &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.0602519 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0061253 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -9.836533 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0000000 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; internet_service_x_fiber_optic &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2948369 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1591085 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.853056 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0638744 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; internet_service_x_no &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.3300755 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1945870 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -1.696287 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0898315 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; contract_x_two_year &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -1.3537957 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1764398 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -7.672847 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0000000 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; contract_x_one_year &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.6609592 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1075567 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -6.145215 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0000000 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; payment_method_x_electronic_check &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.3538913 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0692388 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 5.111170 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0000003 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; paperless_billing &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.3464571 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0743177 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 4.661837 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0000031 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; online_security &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.4952109 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0868370 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -5.702765 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0000000 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; total_charges &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0003271 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0000701 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 4.667379 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0000031 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; phone_service &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.9995716 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1560913 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -6.403762 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0000000 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; tech_support &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.4726258 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0905859 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -5.217431 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0000002 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; monthly_charges &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0180637 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0049872 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3.621986 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0002923 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; online_backup &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.2642023 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0800952 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -3.298605 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0009717 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; senior_citizen &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2158180 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0839455 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2.570930 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0101426 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; multiple_lines &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1578324 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0835585 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.888884 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0589074 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; dependents &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.1475798 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0813653 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -1.813793 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0697095 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; device_protection &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.1395521 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0859348 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -1.623929 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1043909 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
+&lt;img src="main_files/figure-html/unnamed-chunk-9-1.svg" style="display: block; margin: auto;" /&gt;
 
 
 ---
 
 # .smallest[Customer churn: SWAG-based Analysis]
 
-<div id="htmlwidget-f77d676cdb168d449d79" style="width:100%;height:40%;" class="widgetframe html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f77d676cdb168d449d79">{"x":{"url":"main_files/figure-html//widgets/widget_unnamed-chunk-10.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-731c2755e5bed107e1ea" style="width:100%;height:40%;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-731c2755e5bed107e1ea">{"x":{"url":"main_files/figure-html//widgets/widget_unnamed-chunk-10.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
 
 ---
 
+<div id="htmlwidget-f6c4f95cf0a4737662b0" style="width:100%;height:40%;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f6c4f95cf0a4737662b0">{"x":{"url":"main_files/figure-html//widgets/widget_unnamed-chunk-11.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+
+
+---
 # SWAG NETWORK
 
 We can represent the relationship between variables in the best performing models (with respect to the estimated out of sample error) with a chord diagram. Each chord represent the number of time two variables were included in a model among the best performing models.
@@ -374,8 +239,8 @@ We can represent the relationship between variables in the best performing model
 
 &lt;div align="center"&gt;
 
-<div id="htmlwidget-cd5137fbbe57d4a02421" style="width:100%;height:504px;" class="widgetframe html-widget"></div>
-<script type="application/json" data-for="htmlwidget-cd5137fbbe57d4a02421">{"x":{"url":"main_files/figure-html//widgets/widget_unnamed-chunk-11.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-809eaa5376b42eabf6b5" style="width:100%;height:504px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-809eaa5376b42eabf6b5">{"x":{"url":"main_files/figure-html//widgets/widget_unnamed-chunk-12.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
 
 &lt;/div&gt;
 

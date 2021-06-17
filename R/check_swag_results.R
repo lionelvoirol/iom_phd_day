@@ -57,8 +57,8 @@ plotly::ggplotly(g1)
 
 
 # density plot error
-dimension_cv_sub 
-ggplot(dimension_cv) +
+dimension_cv_sub = dimension_cv %>% filter(best_model == 1)
+ggplot(dimension_cv_sub) +
   aes(x = cv) +
   geom_density(adjust = 1L, fill = "#cae2f9") +
   theme_minimal(base_size = 22) + ylab("Density")+
