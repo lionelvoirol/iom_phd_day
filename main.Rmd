@@ -230,7 +230,7 @@ include_graphics("pics/network_breast_paper.png")
 # .smallest[Logistic Regression]
 
 - In statistics, the .hi.purple2[logistic model] is used to .purple2[model the probability of a certain event existing] such as pass/fail, healthy/sick or buying/not buying an item.
-- In most (modern) empirical studies, a large number of variables are measured (often larger than the number of observation) and therefore researchers generally try to .purple2[identify the smallest possible set of variables that can still achieve good predictive performance]. This taks is often referred to as model (or variable) selection.
+- In most (modern) empirical studies, a large number of variables are measured (often larger than the number of observation) and therefore researchers generally try to .purple2[identify the smallest possible set of variables that can still achieve good predictive performance]. This task is often referred to as model (or variable) selection.
 
 How statisticians (typically) understand this definition:
 - We are looking for a .pink[single model].
@@ -253,11 +253,11 @@ However, this approach has some drawbacks:
 
 # .smallest[How to address these limitations?]
 
-- A possible solution is the .pink[SWAG algorithm] proposed in Guerrier et al. (2016) and later improved in Molinari et al. (2021). This .purple2[wrapper] method aims to alleviate (some of) these issues and .purple2[is build "on top" of an arbitrary predictive method] (e.g. logistic regression, random forest, ANN, ...). 
+- A possible solution is the .pink[SWAG algorithm] proposed in Guerrier et al. (2016) and later improved in Molinari et al. (2021). This .purple2[wrapper] method aims to alleviate (some of) these issues and .purple2[is built "on top" of an arbitrary predictive method or algorithm] (e.g. logistic regression, random forest, ANN, ...). 
 - Its goals are the following:
-    - Finding ALL models (and parameters) minimizing an out-of-sample objective function (e.g.  classification error).
+    - Finding ALL models (and parameters) minimizing an out-of-sample user-defined objective function (e.g.  classification error).
     - Restricting our attention to the models with the smallest dimension.
-- As an example, we applied in Guerrier et al. (2016) our methodology to well-known dataset on the .purple2[classification of Acute Myeloid Leukemia (AML) against Acute Lymphoblastic Leukemia (ALL)] (see Golub et al., 1999).
+- As an example, we applied in Guerrier et al. (2016) our methodology to a well-known dataset on the .purple2[classification of Acute Myeloid Leukemia (AML) against Acute Lymphoblastic Leukemia (ALL)] (see Golub et al., 1999).
 
 ---
 
@@ -298,12 +298,12 @@ include_graphics("pics/network.png")
 
 - Most statistical methods are used to deliver estimates and predictions for different problems with .purple2[the goal of using these results for decision-making] (e.g. whether a patient should be treated, selecting a drug or its dosage, marketing strategy, ...). 
 - The vast majority of these methods are .hi.pink[independent] of the context of this decision-making process and the approach used to obtain model's parameters (and prediction) is .hi.pink[fixed] for all applications.
-- This can lead to .puple2[contradictory examples] (e.g.  asymmetric "risk" of treating vs not treating a patient). Indeed, not all prediction errors are the "same" or have similar "impacts".
-- The SWAG allows to .purple2[incorporate] the "context" of the decision-making (e.g. weighted risks).
+- This can lead to .purple2[contradictory examples] (e.g.  asymmetric "risk" of treating vs not treating a patient). Indeed, not all prediction errors are the "same" or have similar "impacts" (e.g. missing on a good investment opportunity or investing in a bad one).
+- The SWAG allows to .purple2[incorporate] the "context" of the decision-making through its user-defined objective function (e.g. weighted risks).
 
 ---
 
-# .smallest[Not all classification errors are the same...] 🙄
+# .smallest[Not all classification errors are the same...] 🤔
 
 .pull-left[
 <br>
@@ -333,11 +333,11 @@ include_graphics("pics/fun2.png")
 # .smallest[Example: Customer churn]
 
 - Customer churn or attrition corresponds to the loss of clients or customers.
-- Banks, telephone service companies, Internet service providers and other similar companies, often use customer attrition rates as one of their .purple2[key business metrics].
-- Adequate (probabilistic) modeling of customer churn is therefore a problem of interest. A .purple2[classical and standard approach to model such data] is following:
-    - Model the data using logistic regression.
+- Banks, telephone service companies, internet service providers and other similar companies often use customer attrition rates as one of their .purple2[key business metrics].
+- Adequate (probabilistic) modeling of customer churn is therefore a matter of interest. A .purple2[classical and standard approach to model such data] is following:
+    - Model the data using a logistic regression.
     - Select the variables using the AIC (or other similar criteria) in a stepwise (greedy) manner (a popular alternative would be based on the lasso).
-    - Make inference on the variables of interested based on the MLE on the selected model (⚠️ as if the model was known! ⚠️).
+    - Make inference on the variables of interest based on the MLE of the selected model (⚠️ as if the model was known! ⚠️).
 
 
 ---
@@ -346,12 +346,12 @@ include_graphics("pics/fun2.png")
 
 We consider the [*Telco customer churn*](https://community.ibm.com/community/user/businessanalytics/blogs/steven-macko/2019/07/11/telco-customer-churn-1113) that provides information about .purple2[customers of a telecom company and whether or not they left the company].
 
-The data set includes information about:
+The dataset includes information about:
 
-- .pink[Customers who left within the last month]
-- .pink[Services that each customer has signed up for] (e.g. phone, multiple lines, internet, online security, ...)
-- .pink[Customer account information] (e.g. how long they have been a customer, contract, payment method, ...)
-- .pink[Demographic info] (e.g. gender, age range, ...)
+- .pink[Customers who left within the last month].
+- .pink[Services that each customer has signed up for] (e.g. phone, multiple lines, internet, online security, ...).
+- .pink[Customer account information] (e.g. how long they have been a customer, contract, payment method, ...).
+- .pink[Demographic info] (e.g. gender, age range, ...).
 
 This dataset is relatively large with $10^4$ observations and more than $50$ variables.
 
@@ -495,17 +495,12 @@ We can represent the relationship between variables in the best performing model
 ```{r, echo =F, fig.align='center'}
 library(chorddiag)
 load("data/mat_3.rda")
-diag(mat_3) = 0
-mat_3[lower.tri(mat_3)]  <- t(mat_3)[lower.tri(mat_3)]
-isSymmetric(mat_3)
 complete_names = colnames(mat_3)
 abr = substr( complete_names , start = 1 , stop = 3 )
 rownames(mat_3) = abr
 colnames(mat_3) = abr
 l2 = chorddiag(mat_3, groupnamePadding = 10, categorynameFontsize = 6, tooltipNames = complete_names)
-l2
 frameWidget(l2,  width ='100%')
-
 ```
 
 </div>
