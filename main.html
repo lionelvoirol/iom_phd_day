@@ -4,19 +4,19 @@
     <title>Modelling and Data Analytics for Pharmaceutical Sciences</title>
     <meta charset="utf-8" />
     <meta name="author" content="Stéphane Guerrier" />
-    <script src="main_files/header-attrs-2.8/header-attrs.js"></script>
+    <script src="main_files/header-attrs-2.9/header-attrs.js"></script>
     <link href="main_files/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="main_files/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
     <link href="main_files/remark-css-0.0.1/metropolis-fonts.css" rel="stylesheet" />
-    <link href="main_files/tile-view-0.2.4/tile-view.css" rel="stylesheet" />
-    <script src="main_files/tile-view-0.2.4/tile-view.js"></script>
-    <link href="main_files/panelset-0.2.4/panelset.css" rel="stylesheet" />
-    <script src="main_files/panelset-0.2.4/panelset.js"></script>
+    <link href="main_files/tile-view-0.2.6/tile-view.css" rel="stylesheet" />
+    <script src="main_files/tile-view-0.2.6/tile-view.js"></script>
+    <link href="main_files/panelset-0.2.6/panelset.css" rel="stylesheet" />
+    <script src="main_files/panelset-0.2.6/panelset.js"></script>
     <script src="main_files/clipboard-2.0.6/clipboard.min.js"></script>
-    <link href="main_files/xaringanExtra-clipboard-0.2.4/xaringanExtra-clipboard.css" rel="stylesheet" />
-    <script src="main_files/xaringanExtra-clipboard-0.2.4/xaringanExtra-clipboard.js"></script>
+    <link href="main_files/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.css" rel="stylesheet" />
+    <script src="main_files/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.js"></script>
     <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
-    <link href="main_files/xaringanExtra-extra-styles-0.2.4/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <link href="main_files/xaringanExtra-extra-styles-0.2.6/xaringanExtra-extra-styles.css" rel="stylesheet" />
     <script src="main_files/htmlwidgets-1.5.3/htmlwidgets.js"></script>
     <script src="main_files/pymjs-1.3.2/pym.v1.js"></script>
     <script src="main_files/widgetframe-binding-0.3.1/widgetframe.js"></script>
@@ -193,7 +193,7 @@ However, this approach has some drawbacks:
 
 ---
 
-# .smallest[Customer churn: Dataset]
+# .smallest[Customer churn: dataset]
 
 We consider the [*Telco customer churn*](https://community.ibm.com/community/user/businessanalytics/blogs/steven-macko/2019/07/11/telco-customer-churn-1113) that provides information about .purple2[customers of a telecom company and whether or not they left the company].
 
@@ -217,27 +217,25 @@ This dataset is relatively large with `\(10^4\)` observations and more than `\(5
 
 ---
 
-# .smallest[Customer churn: SWAG-based Analysis]
+# .smallest[Customer churn: SWAG-based analysis]
 
-<div id="htmlwidget-6716c9e89e48b893116f" style="width:100%;height:40%;" class="widgetframe html-widget"></div>
-<script type="application/json" data-for="htmlwidget-6716c9e89e48b893116f">{"x":{"url":"main_files/figure-html//widgets/widget_unnamed-chunk-10.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
-
----
+.panelset[
+.panel[.panel-name[Scree plot]
+<div id="htmlwidget-714114020d8ee288d796" style="width:100%;height:40%;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-714114020d8ee288d796">{"x":{"url":"main_files/figure-html//widgets/widget_unnamed-chunk-10.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+].panel[.panel-name[Density]
 
 &lt;img src="main_files/figure-html/unnamed-chunk-11-1.svg" style="display: block; margin: auto;" /&gt;
 
-
----
-
-# afklsgn
-
+].panel[.panel-name[Network]
 &lt;div align="center"&gt;
 
-<div id="htmlwidget-2eb7ca8904af35699cf6" style="width:100%;height:504px;" class="widgetframe html-widget"></div>
-<script type="application/json" data-for="htmlwidget-2eb7ca8904af35699cf6">{"x":{"url":"main_files/figure-html//widgets/widget_unnamed-chunk-12.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-ef5b7e4bc6fb00335045" style="width:100%;height:504px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ef5b7e4bc6fb00335045">{"x":{"url":"main_files/figure-html//widgets/widget_unnamed-chunk-12.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
 
 &lt;/div&gt;
-
+]
+]
 
 ---
 
