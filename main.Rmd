@@ -342,7 +342,7 @@ include_graphics("pics/fun2.png")
 
 ---
 
-# .smallest[Customer churn: Dataset]
+# .smallest[Customer churn: dataset]
 
 We consider the [*Telco customer churn*](https://community.ibm.com/community/user/businessanalytics/blogs/steven-macko/2019/07/11/telco-customer-churn-1113) that provides information about .purple2[customers of a telecom company and whether or not they left the company].
 
@@ -365,7 +365,7 @@ customer_churn <- read_csv("data/customer_churn.csv")
 
 # .smallest[Customer churn: standard analysis]
 
-```{r, echo=F}
+```{r, echo=F, fig.align='center'}
 # load("data/selected_model_aic.rda")
 # df_1 = summary(selected_model_aic)
 # df_1$coefficients %>%
@@ -403,9 +403,11 @@ text(x = .06, y = 4, "0.05", cex = 1.5)
 
 ---
 
-# .smallest[Customer churn: SWAG-based Analysis]
+# .smallest[Customer churn: SWAG-based analysis]
 
-```{r, echo =F}
+.panelset[
+.panel[.panel-name[Scree plot]
+```{r, echo = F, fig.align='center', fig.width=10, fig.height=7}
 library(MASS)
 library(boot)
 library(ggplot2)
@@ -460,10 +462,9 @@ l = plotly::ggplotly(g1)
 
 frameWidget(l, width='100%', height='40%')
 ```
+].panel[.panel-name[Density]
 
----
-
-```{r, echo = F}
+```{r, echo = F, fig.align='center', fig.width=10, fig.height=5.5}
 # density plot error
 library(MASS)
 library(boot)
@@ -495,20 +496,17 @@ g2 = ggplot(dimension_cv_sub) +
   aes(x = cv) +
   geom_density(adjust = 1L, fill = "#cae2f9") +
   theme_minimal(base_size = 22) + ylab("Density")+
-  xlab("Cross-Validation Error") + geom_vline(xintercept =  error_aic_selected)+
+  xlab("Cross-validation error") + geom_vline(xintercept =  error_aic_selected)+
 
   annotate("text", x = .1985, y = 400,
-           label = "Cross-Validation Error \n of AIC selected model") +
-  ggtitle("Cross Validation Error of all models")+xlim(.19,.20)
+           label = "Cross-validation error \n of AIC selected model") +
+  ggtitle("Cross validation error of the selected models")+xlim(.19,.20)
 g2
 # g3 =  plotly::ggplotly(g2)
 # frameWidget(g3, width='100%', height='40%')
 ```
 
----
-
-# afklsgn
-
+].panel[.panel-name[Network]
 <div align="center">
 
 ```{r, echo =F, fig.align='center'}
@@ -529,7 +527,8 @@ frameWidget(l2,  width ='100%')
 ```
 
 </div>
-
+]
+]
 
 ---
 
